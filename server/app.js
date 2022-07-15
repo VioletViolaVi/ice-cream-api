@@ -13,8 +13,14 @@ app.get("/", (request, response) => {
 });
 
 app.get("/flavours", (req, res) => {
+  let flavours = data;
+
+  if (req.query.vegan === "true") {
+    flavours = flavours.filter((singleFlav) => singleFlav["vegan"]);
+  }
+
   res.json({
-    flavours: data.map((singleFlav) => singleFlav["flavour"]),
+    flavours: flavours.map((singleFlav) => singleFlav["flavour"]),
   });
 });
 
@@ -34,6 +40,8 @@ app.get("/flavours/:id", (req, res) => {
     res.json({
       flavour: filteredData[0],
     });
+
+    // checks if it can be json, stringifies it, tells the client that its a particular type and sends it a the body
   } else {
     res.status(404).json({
       error: "no such ice cream",
