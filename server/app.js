@@ -59,6 +59,8 @@ app.get("/flavours/:id", (req, res) => {
 
 // used to add more ice cream flavours
 app.post("/flavours", (req, res) => {
+  //   console.log(req.body);
+
   const newFlavour = req.body;
   newFlavour["id"] = data.length + 1;
   data.push(newFlavour);
