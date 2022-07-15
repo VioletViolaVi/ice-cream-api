@@ -10,12 +10,13 @@ describe("API", () => {
     api = app.listen(3030);
   });
 
-  afterAll(() => {
+  // "done" parameter is a callback function, can be used to say "yes it's finished" to be extra safe - this callback function is found in jest
+  afterAll((done) => {
     // close down server
-    api.close();
+    api.close(done);
   });
 
-  it("Responds to a GET request at / with a 200 status", () => {
-    request(api).get("/").expect(200);
+  it("Responds to a GET request at / with a 200 status", (done) => {
+    request(api).get("/").expect(200, done);
   });
 });
