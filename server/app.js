@@ -1,9 +1,16 @@
 const express = require("express");
+const cors = require("cors");
 
 const data = require("./data");
 
 // creates express app
 const app = express();
+
+// tell the app to listen to JSON bodies on POST requests
+app.use(express.json());
+
+// adds "headers" to each response, saying that we're okay w/ sharing resources with others
+app.use(cors());
 
 // shows what type of request being made & url where request is being made & response will be gotten
 
@@ -37,6 +44,7 @@ app.get("/flavours/:id", (req, res) => {
 
   // error handling
   if (filteredData.length === 1) {
+    // sends 1st filtered result
     res.json({
       flavour: filteredData[0],
     });
@@ -47,10 +55,17 @@ app.get("/flavours/:id", (req, res) => {
       error: "no such ice cream",
     });
   }
+});
 
-  // sends 1st filtered result
-  res.json({
-    flavour: filteredData[0],
+// used to add more ice cream flavours
+app.post("/flavours", (req, res) => {
+  const newFlavour = req.body;
+  newFlavour["id"] = data.length + 1;
+  data.push(newFlavour);
+
+  res.status(201).json({
+    success: true,
+    flavour: newFlavour,
   });
 });
 
