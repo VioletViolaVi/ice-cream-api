@@ -1,4 +1,5 @@
 .DS_Store
+# to ignore any node_modules folders, whether @ the top or not (i think this is refering to directory levels)
 **/node_modules
 coverage
 .vs_code
